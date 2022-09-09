@@ -45,7 +45,7 @@ if (Membre::ajouter($nom, $prenom, $email, $reponse)) {
             <br>
             <br>L'association est aussi présente sur les réseaux sociaux : 
             <br>&nbsp;&nbsp;<a href="https://www.facebook.com/amicalevds">page Facebook du club</a>
-            <br>&nbsp;&nbsp;<a href="https://www.facebook.com/Coursesdes4saisons/">page Facebook dédiée à l'organisation des 4 saisons d'Amiens Métropole</a>
+            <br>&nbsp;&nbsp;<a href="https://www.facebook.com/Coursesdes4saisons/">page Facebook dédiée à l'organisation des 4 saisons.js d'Amiens Métropole</a>
             <br>
             <br>Vous pouvez aussi vous abonner au groupe Facebook de l'association <a href="https://www.facebook.com/groups/amicaleduvaldesomme">Groupe Facebook</a> 
             <br>

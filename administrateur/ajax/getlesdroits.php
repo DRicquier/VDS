@@ -2,7 +2,7 @@
 
 /**
  *  renvoi les modules (repertoires) accessibles par l'administrateur dont l'id est transmis
- * Appel : administration/index.js
+ * Appel : administration/club.js
  */
 
 require '../../include/initialisation.php';

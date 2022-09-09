@@ -43,7 +43,7 @@ if (isset($_SESSION['membre'])) {
             $description = $ligne['description'];
             $repertoire = $ligne['repertoire'];
             $cadreAdmin .= <<<EOD
-            <a class='btn btn-sm btn-outline-dark mt-2 shadow-sm' href='/$repertoire/index.php'>
+            <a class='btn btn-sm btn-outline-dark mt-2 shadow-sm' href='/$repertoire/club.php'>
               $nom
               <i class="bi bi-info-circle text-info"
                    data-bs-toggle="popover"
@@ -75,6 +75,9 @@ require RACINE . '/include/head.php';
         <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/page/formation.php">
             Formation
         </a>
+        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/page/club.php">
+            Documentation
+        </a>
         <div class="marquee-rtl">
             <div id='detailBandeau' class=" article fst-italic"></div>
         </div>
@@ -93,6 +96,9 @@ require RACINE . '/include/head.php';
                data-bs-content="Calendrier, horaires et autres informations à connaitre">
             </i>
         </a>
+        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/page/club.php">
+            Documentation
+        </a>
     </div>
 </div>
 
@@ -104,6 +110,9 @@ require RACINE . '/include/head.php';
     <div class="card-body">
         <?= $cadreMembre ?>
     </div>
+    <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/page/club.php">
+        Documentation
+    </a>
 </div>
 
 <?php

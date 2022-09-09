@@ -1,7 +1,7 @@
 <?php
 /**
  *  renvoie l'id et le nom prénom des administrateur et l'id et la description des fonctions
- * Appel : administration/index.js
+ * Appel : administration/club.js
  */
 
 require '../../include/initialisation.php';

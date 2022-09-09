@@ -1,7 +1,7 @@
 <?php
 /**
  *  suppression de tous les droits de l'administrateur dont l'id est passé en paramètre
- * Appel : administration/index.js
+ * Appel : administration/club.js
  */
 
 require '../../include/initialisation.php';

@@ -2,7 +2,7 @@
 
 /**
  *  supprimer une photo présente dans la photothèque
- * Appel : phototheque/index.js
+ * Appel : phototheque/club.js
  * Résultat : 1 ou message d'erreur
  */
 

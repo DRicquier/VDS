@@ -5,7 +5,7 @@
 // liste des pages
 // 1 Présentation du club
 // 2 Adhésion au club
-// 3 Présentation des 4 saisons
+// 3 Présentation des 4 saisons.js
 // 4 Formation
 // 5 Mentions légales
 // 6 Politiques de confidentialité

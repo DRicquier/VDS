@@ -1,7 +1,7 @@
 <?php
 /**
  *  ajouter une photo dans le répertoire data/phototheue
- * Appel : phototheque/index.js
+ * Appel : phototheque/club.js
  * Résultat : 1 ou message d'erreur
  */
 

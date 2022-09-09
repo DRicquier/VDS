@@ -135,7 +135,7 @@ EOD;
 // ------------------------------------------------------------------------------
 
     /**
-     * Mémoriser l'erreur dans le fichier erreur.log et rediriger  l'utilisateur vers la page erreur/index.php
+     * Mémoriser l'erreur dans le fichier erreur.log et rediriger  l'utilisateur vers la page erreur/club.php
      * @param string $libelle Libellé de l'erreur
      * @return void
      */
@@ -143,7 +143,7 @@ EOD;
     {
 
         $_SESSION['erreur'] = $libelle;
-        header("location:/erreur/index.php");
+        header("location:/erreur/club.php");
         exit;
     }
 

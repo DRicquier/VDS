@@ -6,4 +6,4 @@ session_unset();
 session_destroy();
 // supprimer le cookie si il existe
 if (isset($_COOKIE['seSouvenir'])) setcookie('seSouvenir', '', time() - 3600, '/');
-header("location:../index.php");
+header("location:../club.php");

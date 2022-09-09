@@ -3,7 +3,7 @@
  *  Affichage de l'interface permettant la modification du contenu des pages gérées par un administrateur
  *            Sélection de la page concerné à l'aide d'une zone de liste
  * Remarque : pas de possibilité d'ajout
- *            pages concernées : Présentation du club, des 4 saisons, de l'adhésion, des formations, memtions légales, politique de confidentialité
+ *            pages concernées : Présentation du club, des 4 saisons.js, de l'adhésion, des formations, memtions légales, politique de confidentialité
  */
 
 require '../include/initialisation.php';

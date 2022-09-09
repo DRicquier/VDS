@@ -2,7 +2,7 @@
 
 /**
  *  ajouter ou supprimer un administrateur
- * Appel : administration/index.js
+ * Appel : administration/club.js
  */
 
 

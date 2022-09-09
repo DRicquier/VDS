@@ -2,7 +2,7 @@
 
 /**
  *  Retourner le contenu des pages statiques
- * Appel : page/index.js
+ * Appel : page/club.js
  * Résultat : le contenu de la table page dans le format JSON
  */
 

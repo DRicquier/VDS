@@ -2,7 +2,7 @@
 
 /**
  *  mise à jour d'un enregistrement de la table page(id, nom, contenu)
- * Appel : page/index.js
+ * Appel : page/club.js
  * Résultat : 1 ou message d'erreur
  */
 

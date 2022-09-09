@@ -70,7 +70,7 @@ function connecter() {
             dataType: 'json',
             error: reponse => { msg.innerHTML = Std.genererMessage(reponse.responseText)},
             success: () => {
-                    location.href = "/index.php"
+                    location.href = "/club.php"
             }
         })
     }

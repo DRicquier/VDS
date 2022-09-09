@@ -5,7 +5,7 @@
  *        dernier résultat présent sur le site FFA : table resultatFFA
  *        prochaine épreuve : table epreuve
  *        la dernière actualité : champ contenu de la table bandeau
- *        informations clubs et 4 saisons : table element
+ *        informations clubs et 4 saisons.js : table element
  *        partenaires et liens utiles : table partenaire et lien
  */
 

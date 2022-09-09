@@ -1,7 +1,7 @@
 <?php
 /**
  *  Récupérer l'ensemble des photos présentes dans le répertoire data/phototheque
- * Appel : phototheque/index.js
+ * Appel : phototheque/club.js
  * Résultat : tableau au format json contenant le nom des fichiers ["nom1", "nom2" ...]
  */
 

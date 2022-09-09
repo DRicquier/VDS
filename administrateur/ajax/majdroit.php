@@ -1,7 +1,7 @@
 <?php
 /**
  *  ajout ou suppression dans la table droit(administrateur, repertoire)
- * Appel : administration/index.js
+ * Appel : administration/club.js
  */
 
 
