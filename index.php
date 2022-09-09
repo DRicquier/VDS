@@ -109,10 +109,11 @@ require RACINE . '/include/head.php';
     </div>
     <div class="card-body">
         <?= $cadreMembre ?>
+        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOCmembre.php">
+            Documentation
+        </a>
     </div>
-    <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOCmembre.php">
-        Documentation
-    </a>
+
 </div>
 
 <?php
