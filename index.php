@@ -75,7 +75,7 @@ require RACINE . '/include/head.php';
         <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/page/formation.php">
             Formation
         </a>
-        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/page/club.php">
+        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOCclub.php">
             Documentation
         </a>
         <div class="marquee-rtl">
@@ -96,7 +96,7 @@ require RACINE . '/include/head.php';
                data-bs-content="Calendrier, horaires et autres informations à connaitre">
             </i>
         </a>
-        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/page/club.php">
+        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOC4saisons.php">
             Documentation
         </a>
     </div>
@@ -110,7 +110,7 @@ require RACINE . '/include/head.php';
     <div class="card-body">
         <?= $cadreMembre ?>
     </div>
-    <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/page/club.php">
+    <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOCmembre.php">
         Documentation
     </a>
 </div>
