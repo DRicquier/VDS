@@ -43,7 +43,7 @@ if (isset($_SESSION['membre'])) {
             $description = $ligne['description'];
             $repertoire = $ligne['repertoire'];
             $cadreAdmin .= <<<EOD
-            <a class='btn btn-sm btn-outline-dark mt-2 shadow-sm' href='/$repertoire/club.php'>
+            <a class='btn btn-sm btn-outline-dark mt-2 shadow-sm' href='/$repertoire/index.php'>
               $nom
               <i class="bi bi-info-circle text-info"
                    data-bs-toggle="popover"
@@ -75,7 +75,7 @@ require RACINE . '/include/head.php';
         <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/page/formation.php">
             Formation
         </a>
-        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOCclub.php">
+        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOC.php?type=Club">
             Documentation
         </a>
         <div class="marquee-rtl">
@@ -96,7 +96,7 @@ require RACINE . '/include/head.php';
                data-bs-content="Calendrier, horaires et autres informations à connaitre">
             </i>
         </a>
-        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOC4saisons.php">
+        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOC.php?type=4 saisons">
             Documentation
         </a>
     </div>
@@ -109,7 +109,7 @@ require RACINE . '/include/head.php';
     </div>
     <div class="card-body">
         <?= $cadreMembre ?>
-        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOCmembre.php">
+        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOC.php?type=Membre">
             Documentation
         </a>
     </div>
