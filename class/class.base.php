@@ -38,4 +38,18 @@ EOD;
         $curseur->closeCursor();
         return $lesLignes;
     }
+    public  static function getLesMembres() : array  {
+        $mois = date('m');
+        $annee = date('Y');
+        // l'année de référence sera l'année n + 1 si on se trouve après le mois de référence
+        if ($mois >= 9) $annee++;
+        $db = Database::getInstance();
+        // $curseur = $this->db->query("call getLesCategories($annee)");
+        $curseur = $db->prepare("call getLesCategories(:annee)");
+        $curseur->bindParam('annee', $annee);
+        $curseur->execute();
+        $lesLignes = $curseur->fetchAll(PDO::FETCH_NUM);
+        $curseur->closeCursor();
+        return $lesLignes;
+    }
 }

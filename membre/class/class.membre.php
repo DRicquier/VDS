@@ -85,7 +85,7 @@ EOD;
             Order by nom, prenom;
 EOD;
         $curseur = $db->query($sql);
-        $lesLignes = $curseur->fetchAll(PDO::FETCH_ASSOC);
+        $lesLignes = $curseur->fetchAll(PDO::FETCH_NUM);
         $curseur->closeCursor();
         return $lesLignes;
     }
