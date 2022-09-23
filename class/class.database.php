@@ -11,16 +11,10 @@ class Database
     {
 
         if (is_null(self::$_instance)) {
-            $dbHost = 'localhost';
-            $dbUser = 'root';
-            $dbPassword = '';
-            $dbBase =  'vds';
-            $dbPort = 3306;
 
-            /*
-            if($_SERVER['SERVER_NAME'] === 'localhost'){
-                echo 'e';
-                $dbHost = 'localhost';
+
+            if($_SERVER['SERVER_NAME'] === 'vds'){
+                $dbHost = 'vds';
                 $dbUser = 'root';
                 $dbPassword = '';
                 $dbBase =  'vds';
@@ -33,7 +27,7 @@ class Database
                 $dbBase =  'ricquier_vds';
                 $dbPort = 3306;
             }
-            */
+
             try {
                 $chaine = "mysql:host=$dbHost;dbname=$dbBase;port=$dbPort";
                 $db = new PDO($chaine, $dbUser, $dbPassword);
