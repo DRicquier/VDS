@@ -11,7 +11,7 @@ CREATE TABLE documents (
 );
 
 insert into documents(titre, type, fichier)
-values ("les minimas pour les Frances","Club","pdf"),
+values ("les minimas pour les Frances","Club","les minimas pour les Frances.pdf"),
        ("Parcours du 5 Km","4 saisons","Parcours du 5 Km.pdf"),
        ("Parcours du 10 Km", "4 saisons","Parcours du 10 Km.pdf"),
        ("Autorisation parentales 4 saisons","4 saisons", "Autorisation parentales 4 saisons.pdf"),
