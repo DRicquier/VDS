@@ -10,6 +10,9 @@
 
 
 // premier contrôle : le visiteur doit être connecté
+if (!isset($_SESSION['membre'])) {
+    Std::traiterErreur("Vous devez vous connecter pour accéder à cette fonctionnalité");
+}
 
 
 
@@ -20,14 +23,29 @@
 //Comment récupérer le répertoire ?
 // on peut connaitre le nom complet du script en cours avec $_SERVER['PHP_SELF'] : /repertoire/sousrepertoire/fichier.php
 // il suffit de découper ce nom sur le caractère '/' et prendre le second élément
-
-
-
-
+$fichier = $_SERVER['PHP_SELF'];
+$elements = explode('/', $fichier);
+$repertoire = $elements[1];
 
 // récupération de l'id du membre
 // L'id du membre est quant à lui stocké dans la variable de session membre
-
-
+$idMembre = $_SESSION["membre"]['id'];
 
 // il faut être autorisé : Vérification dans la table droit
+$db = Database::getInstance();
+$sql = <<<EOD
+ Select 1
+ From droit 
+ where idAdministrateur = :idMembre
+ and idFonction = :idFonction
+EOD;
+$curseur = $db->prepare($sql);
+$curseur->bindParam('idMembre', $idMembre);
+$curseur->bindParam('idFonction', $idFonction);
+$curseur->execute();
+$ligne = $curseur->fetchObject();
+if (!$ligne) {
+    $_SESSION['erreur'] = "Vous n’êtes pas autorisé à accéder à cette fonctionnalité";
+    header('location:/erreur');
+    exit;
+}
