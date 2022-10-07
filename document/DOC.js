@@ -29,28 +29,5 @@ function afficher(data) {
         a.classList.add("active","mx-4","my-2");
         a.style.cursor='pointer';
 
-
-        // partie administrateur
-        let buttonModif = document.createElement("button");
-        buttonModif.classList.add("btn","btn-warning");
-        buttonModif.setAttribute("id","modif");
-        buttonModif.style.marginLeft = "100px";
-        let btnModifContent = document.createTextNode('Modifier');
-        buttonModif.appendChild(btnModifContent);
-        a.appendChild(buttonModif);
-
-        let buttonSupprimer = document.createElement("button");
-        buttonSupprimer.classList.add("btn","btn-danger");
-        buttonSupprimer.setAttribute("id","supp");
-        buttonSupprimer.style.marginLeft = "20px";
-        let btnSuppContent = document.createTextNode('Supprimer');
-        buttonSupprimer.appendChild(btnSuppContent);
-        a.appendChild(buttonSupprimer);
-
-        let espace = document.createElement("br");
-        a.appendChild(espace);
-
-        //Fonction modifier
-
     }
 }

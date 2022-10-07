@@ -148,7 +148,7 @@ EOD;
     }
 
     /**
-     * mémoriser l'erreur dans le fichier erreur.log afficher l'ereurr et arrêter le sript
+     * mémoriser l'erreur dans le fichier erreur.log afficher l'ereurr et arrêter le script
      * @param string $libelle Libellé de l'erreur
      * @return void
      */
@@ -158,6 +158,14 @@ EOD;
         echo $libelle;
         exit;
     }
+    public static function necessiteConnexion(): void {
+        if (!isset($_SESSION['membre'])) {
+            $_SESSION['url'] = $_SERVER['PHP_SELF'];
+            header("location:/profil/connexion.php");
+            exit;
+        }
+    }
+
 
 // ------------------------------------------------------------------------------
 // méthode concernant la traçabilité

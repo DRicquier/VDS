@@ -10,9 +10,7 @@
 
 
 // premier contrôle : le visiteur doit être connecté
-if (!isset($_SESSION['membre'])) {
-    Std::traiterErreur("Vous devez vous connecter pour accéder à cette fonctionnalité");
-}
+Std::necessiteConnexion();
 
 
 
