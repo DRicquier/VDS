@@ -22,7 +22,7 @@ function init() {
 
     pied.style.visibility = 'visible';
 
-    // traitement associé au bouton 'Ajouter'
+    // traitement associé au bouton 'ajouter.php'
     btnAjouter.onclick = () => {
         if (Std.donneesValides()) {
             // lancement de la demande d'ajout dans la base

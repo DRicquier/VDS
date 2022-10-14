@@ -74,7 +74,7 @@ EOD;
     }
 
     /**
-     * Ajouter une ligne
+     * ajouter.php une ligne
      *
      * @param array $lesCellules Valeur de chaque cellule
      * @param array $lesClasses  Classe associée à chaque cellule

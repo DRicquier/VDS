@@ -220,7 +220,7 @@ function supprimerTousLesDroits() {
 }
 
 /**
- * Ajouter tous les droits
+ * ajouter.php tous les droits
  * Toutes les cases sont cochées sur l'interface
  */
 function ajouterTousLesDroits() {

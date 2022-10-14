@@ -21,8 +21,9 @@ require RACINE . './include/head.php';
                 </table>
             </div>
         </div>
-        <div id="ajoutFichier">Ajoute ton fichier ici </div>
+        <div id="ajoutFichier"></div>
     </div>
+    <button class="btn btn-primary" type="submit" id="valider">Valider</button>
 
 </div>
 
