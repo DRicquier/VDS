@@ -17,7 +17,7 @@ $type =  $_POST['type'];
 $db = Database::getInstance();
 
 $sql = <<<EOD
-        Insert into documents(titre,type,fichier) values (:titre, :type, :fichier);
+        Delete from documents(titre,type,fichier) values (:titre, :type, :fichier);
 EOD;
 
 $curseur = $db->prepare($sql);

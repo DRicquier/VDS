@@ -23,8 +23,21 @@ require RACINE . './include/head.php';
         </div>
         <div id="ajoutFichier"></div>
     </div>
-    <button class="btn btn-primary" type="submit" id="valider">Valider</button>
 
+
+    <input type="file" id="fichier" name="file" accept=".pdf" style='display: none '>
+    <div id="upload" class="upload text-center"
+         data-bs-trigger="hover"
+         data-bs-html="true"
+         data-bs-title="<b>Règles à respecter<b>"
+         data-bs-content="<strong>Pdf uniquement<strong><br>Taille limitée à 1 Mo">
+        <i class="bi bi-cloud-upload" style="font-size: 4rem; color: #8b8a8a;"></i>
+        <div>Cliquez ou déposer le document PDF ici</div>
+    </div>
+    <span id='messageCible'></span>
+    <div class="text-center mt-1">
+        <button class="btn btn-primary" type="submit" id="valider">Valider</button>
+    </div>
 </div>
 
 

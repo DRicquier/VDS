@@ -51,7 +51,8 @@ function afficher(data) {
     upload.style.visibility = "hidden";
 
 
-    ajouterFichier.appendChild(upload);
+    let ajouterFichier = document.getElementById("ajoutFichier");
+    ajouterFichier.style.visibility = "hidden";
 
     //Afficher un bouton ajouter
     let buttonAjouter = document.getElementById('ajouter');
@@ -90,11 +91,17 @@ function afficher(data) {
     }
 
     valider.onclick = () => {
+
+
+        if (leFichier == null) {
+            Std.AfficherErreur("Vous n'avez pas sélectionné de fichier");
+            return;
+        }
         const typeFichier = document.location.search.split('=');
         console.log(typeFichier[1]);
 
-        let fichier = upload.files[0];
-        let nomFichier = fichier.name;
+        let leSeulFichier = fichier.files[0];
+        let nomFichier = leSeulFichier.name;
         const split = nomFichier.split(".");
         let titreFichier = split[0];
         let extFichier = split[1];
@@ -111,6 +118,11 @@ function afficher(data) {
                 Std.afficherErreur("Le document n'a pas été ajouté");
             }
         })
+
+
+
+
+
     }
 }
 
