@@ -16,7 +16,7 @@ require RACINE . './include/head.php';
     <div id="main" class="row">
         <div>
             <div class='table-responsive table-hover'>
-                <table>
+                <table style="margin-left: 30px">
                     <tbody id="lesDonnees"></tbody>
                 </table>
             </div>

@@ -7,7 +7,7 @@ window.onload = init;
 
 function init() {
     $.ajax({
-        url: 'ajax/getlesdocs.php' + document.location.search,
+        url: 'ajax/getlesdocsAdmin.php',
         type: 'GET',
         dataType: 'json',
         error: reponse => console.error(reponse.responseText),
@@ -99,30 +99,34 @@ function afficher(data) {
         }
         const typeFichier = document.location.search.split('=');
         console.log(typeFichier[1]);
-
+        let typeDeFichier = typeFichier[1].toString();
+        console.log(typeof(typeDeFichier));
+        /*
         let leSeulFichier = fichier.files[0];
         let nomFichier = leSeulFichier.name;
         const split = nomFichier.split(".");
         let titreFichier = split[0];
         let extFichier = split[1];
 
+         */
+
+        let monFormulaire = new FormData();
+        monFormulaire.append('fichier', leFichier );
+
         $.ajax({
             url: 'ajax/ajouter.php',
             type: 'POST',
-            data: {titre: titreFichier, ext: extFichier, type: typeFichier[1]},
+            data: monFormulaire,
+            processData: false,
+            contentType: false,
             dataType: 'json',
             success: function () {
                 Std.afficherSucces("Le document a été ajouté");
+                setTimeout("location.reload(true);",2000);
+
             },
-            error: function (request) {
-                Std.afficherErreur("Le document n'a pas été ajouté");
-            }
+            error: (reponse) => Std.afficherErreur(reponse.responseText)
         })
-
-
-
-
-
     }
 }
 
@@ -130,10 +134,14 @@ function afficherData(data) {
     for (let documents of data) {
         let a = document.getElementById("lesDonnees").insertRow();
         a.classList.add("active","mx-4","my-2");
+        a.id = documents.titre;
         let titreF = document.createElement("input");
+        titreF.id = documents.id;
         titreF.type = "text";
         titreF.value = documents.titre;
         titreF.required = true;
+        titreF.style.height = "40px";
+        titreF.style.width = "400px";
         a.insertCell().appendChild(titreF);
 
 
@@ -146,7 +154,6 @@ function afficherData(data) {
             a.style.color = "black";
         };
 
-
         a.classList.add("active", "mx-4", "my-2");
         a.style.cursor = 'pointer';
 
@@ -157,7 +164,7 @@ function afficherData(data) {
         let buttonModif = document.createElement("button");
         buttonModif.classList.add("btn", "btn-warning");
         buttonModif.setAttribute("id", "modif");
-        buttonModif.style.marginLeft = "100px";
+        buttonModif.style.marginLeft = "40px";
         let btnModifContent = document.createTextNode('Modifier');
         buttonModif.appendChild(btnModifContent);
         a.appendChild(buttonModif);
@@ -166,25 +173,26 @@ function afficherData(data) {
         let buttonSupprimer = document.createElement("button");
         buttonSupprimer.classList.add("btn", "btn-danger");
         buttonSupprimer.setAttribute("id", "supp");
-        buttonSupprimer.style.marginLeft = "20px";
+        buttonSupprimer.style.marginLeft = "40px";
         let btnSuppContent = document.createTextNode('Supprimer');
         buttonSupprimer.appendChild(btnSuppContent);
         a.appendChild(buttonSupprimer);
 
         buttonSupprimer.onclick = () => {
-            Console.log('supprimer');
             $.ajax({
                 url: 'ajax/supprimer.php',
                 type: 'POST',
-                data: {id : documents.id},
-                dataType: 'json',
-                success: function () {
-                    Std.afficherSucces("Le document a été ajouté");
+                data: {
+                    nomFichier: documents.titre,
                 },
-                error: function (request) {
-                    Std.afficherErreur("Le document n'a pas été ajouté");
+                dataType: "json",
+                error: (reponse) => Std.afficherErreur(reponse.responseText),
+                success:  () => {
+                    Std.afficherSucces("Le document a été supprimé");
+                    setTimeout("location.reload(true);",2000);
                 }
-            })
+            });
+
         }
     }
 

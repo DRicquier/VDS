@@ -3,34 +3,56 @@
 
 require '../../include/initialisation.php';
 
-if (!isset($_POST['titre']) || !isset($_POST['ext']) || !isset($_POST['type'])) {
-    echo "Paramètre manquant";
+const REP = "../../data/document/";
+
+// vérification de la transmission des paramètres
+if (!isset($_POST['nomFichier'])) {
+    echo "Le paramètre n'est pas transmis";
     exit;
 }
 
-// récupération des paramètres
-$titre = $_POST['titre'];
-$ext =  $_POST['ext'];
-$type =  $_POST['type'];
+// récupération de la valeur
+$nomFichier = trim($_POST['nomFichier']);
 
-// modification de la valeur du bandeau
-$db = Database::getInstance();
+// vérification de la valeur
+if (strlen($nomFichier) === 0) {
+    echo "Le paramètre n'est pas renseigné";
+    exit;
+}
 
-$sql = <<<EOD
-        Delete from documents(titre,type,fichier) values (:titre, :type, :fichier);
+$fichier = REP . $nomFichier . ".pdf";
+
+// vérification de l'existence du fichier
+if(!file_exists($fichier)) {
+    echo "Ce fichier n'existe pas";
+    exit;
+}
+
+// suppression du fichier
+if (unlink($fichier)){
+    {
+        $db = Database::getInstance();
+
+        $sql = <<<EOD
+        Delete from documents where titre = :titre;
 EOD;
 
-$curseur = $db->prepare($sql);
-$curseur->bindParam('titre', $titre);
-$curseur->bindParam('type', $type);
-$str = $titre . '.' . $ext;
-$curseur->bindParam('fichier', $str);
-try {
-    $curseur->execute();
-    echo 1;
+        $curseur = $db->prepare($sql);
+        $curseur->bindParam('titre', $nomFichier);
+        try {
+            $curseur->execute();
+            echo 1;
 
-} catch (Exception $e) {
-    echo substr($e->getMessage(), strrpos($e->getMessage(), '#') + 1);
+        } catch (Exception $e) {
+            echo substr($e->getMessage(), strrpos($e->getMessage(), '#') + 1);
+        }
+
+        echo 1;
+    }
 }
+
+
+else
+    echo "La suppression a échoué";
 
 
