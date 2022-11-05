@@ -142,6 +142,21 @@ function afficherData(data) {
         titreF.required = true;
         titreF.style.height = "40px";
         titreF.style.width = "400px";
+        titreF.onchange = () => {
+            if (!Std.verifier(titreF)) return ;
+            $.ajax({
+                url: 'ajax/modifiertitre.php',
+                type: 'POST',
+                data: {titre: titreF.value, id: titreF.id},
+                dataType: "json",
+                success: function () {
+                    Std.afficherSucces("Modification enregistrée");
+                },
+                error: function (request) {
+                    Std.afficherErreur(request.responseText)
+                }
+            })
+        };
         a.insertCell().appendChild(titreF);
 
 
@@ -194,6 +209,8 @@ function afficherData(data) {
             });
 
         }
+
+
     }
 
 
