@@ -1,6 +1,6 @@
 <?php
 
-$titreFonction = "Liste des documents du Club";
+$titreFonction = "Liste des documents";
 require '../include/initialisation.php';
 require RACINE . './include/head.php';
 ?>
@@ -38,6 +38,7 @@ require RACINE . './include/head.php';
     <div class="text-center mt-1">
         <button class="btn btn-primary" type="submit" id="valider">Valider</button>
     </div>
+    </br>
 </div>
 
 

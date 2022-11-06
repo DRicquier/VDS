@@ -11,7 +11,7 @@ require '../../class/class.database.php';
 //Creation du tableau contenant les données
 $db = Database::getInstance();
 $sql = <<<EOD
-    Select id,titre, fichier
+    Select id,titre,type,fichier
     From documents
 EOD;
 $curseur = $db->prepare($sql);

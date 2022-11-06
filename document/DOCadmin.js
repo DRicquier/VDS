@@ -41,7 +41,6 @@ function afficher(data) {
 
     let valider = document.getElementById("valider");
     valider.classList.add('btn', 'btn-success');
-    valider.style.marginLeft = '28%';
     valider.style.visibility = "hidden";
 
     }
@@ -70,6 +69,7 @@ function afficher(data) {
             buttonAjouter.classList.add('btn-success');
             buttonAjouter.classList.remove('btn-danger');
             buttonAjouter.innerText = 'Ajouter';
+            messageCible.innerHTML = "";
         }
 
         if (ajouterFichier.style.visibility == "hidden") {
@@ -92,16 +92,15 @@ function afficher(data) {
 
     valider.onclick = () => {
 
-
         if (leFichier == null) {
             Std.AfficherErreur("Vous n'avez pas sélectionné de fichier");
             return;
         }
+
+        /*
         const typeFichier = document.location.search.split('=');
         console.log(typeFichier[1]);
         let typeDeFichier = typeFichier[1].toString();
-        console.log(typeof(typeDeFichier));
-        /*
         let leSeulFichier = fichier.files[0];
         let nomFichier = leSeulFichier.name;
         const split = nomFichier.split(".");
@@ -159,6 +158,44 @@ function afficherData(data) {
         };
         a.insertCell().appendChild(titreF);
 
+        let typeListe = document.createElement('select');
+        typeListe.id = "idDocumentSelectionne" + documents.id;
+        typeListe.classList.add('form-select');
+
+
+
+        let touslesTypes = ['Club', '4 saisons', 'Membre'];
+
+
+
+        for (const type of touslesTypes) {
+            let option;
+            if (type === documents.type) {
+                option = new Option(type, false, true, true);
+            } else {
+                option = new Option(type);
+            }
+            typeListe.appendChild(option);
+        }
+
+        a.insertCell().appendChild(typeListe);
+
+        typeListe.onchange = () => {
+            if (!Std.verifier(titreF)) return ;
+            $.ajax({
+                url: 'ajax/modifierClub.php',
+                type: 'POST',
+                data: {type: typeListe.value, id: titreF.id},
+                dataType: "json",
+                success: function () {
+                    Std.afficherSucces("Modification enregistrée");
+                },
+                error: function (request) {
+                    Std.afficherErreur(request.responseText)
+                }
+            })
+        };
+
 
 
         // evenement sur le passage de la souris sur les titres
@@ -174,7 +211,8 @@ function afficherData(data) {
 
 
         // partie administrateur
-
+        /*
+        -- non nécessaire --
         //Afficher un bouton Modifier
         let buttonModif = document.createElement("button");
         buttonModif.classList.add("btn", "btn-warning");
@@ -183,14 +221,16 @@ function afficherData(data) {
         let btnModifContent = document.createTextNode('Modifier');
         buttonModif.appendChild(btnModifContent);
         a.appendChild(buttonModif);
+        */
 
         //Afficher un bouton Supprimer
         let buttonSupprimer = document.createElement("button");
         buttonSupprimer.classList.add("btn", "btn-danger");
         buttonSupprimer.setAttribute("id", "supp");
         buttonSupprimer.style.marginLeft = "40px";
-        let btnSuppContent = document.createTextNode('Supprimer');
-        buttonSupprimer.appendChild(btnSuppContent);
+        let btnSuppIcon = document.createElement("i");
+        btnSuppIcon.classList.add("bi","bi-trash");
+        buttonSupprimer.appendChild(btnSuppIcon);
         a.appendChild(buttonSupprimer);
 
         buttonSupprimer.onclick = () => {
@@ -216,7 +256,7 @@ function afficherData(data) {
 
 }
 function controlerFichier(file) {
-    // effacer le message de la zone clble et initialiser la variable leFichier
+    // effacer le message de la zone cible et initialiser la variable leFichier
     messageCible.innerHTML = "";
     messageCible.classList.remove('messageErreur');
     leFichier = null;
