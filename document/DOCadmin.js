@@ -133,6 +133,7 @@ function afficherData(data) {
     for (let documents of data) {
         let a = document.getElementById("lesDonnees").insertRow();
         a.classList.add("active","mx-4","my-2");
+        a.style.fontSize = "1rem";
         a.id = documents.titre;
         let titreF = document.createElement("input");
         titreF.id = documents.id;
@@ -159,6 +160,7 @@ function afficherData(data) {
         a.insertCell().appendChild(titreF);
 
         let typeListe = document.createElement('select');
+        typeListe.style.width = "100px";
         typeListe.id = "idDocumentSelectionne" + documents.id;
         typeListe.classList.add('form-select');
 

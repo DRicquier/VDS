@@ -21,6 +21,7 @@ function afficher(data) {
         a.appendChild(icon)
 
         a.insertCell().innerText = documents.titre;
+        a.style.fontSize = "1rem";
         a.style.height = "30px";
         a.style.verticalAlign = "top";
 

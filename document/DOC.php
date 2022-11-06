@@ -1,6 +1,17 @@
 <?php
 
-$titreFonction = "Liste des documents du Club";
+function getURI(){
+    $adresse = $_SERVER['PHP_SELF'];
+    $i = 0;
+    foreach($_GET as $cle => $valeur){
+        $adresse .= ($i == 0 ? '?' : '&').$cle.($valeur ? '='.$valeur : '');
+        $i++;
+    }
+    return $adresse;
+}
+$partie = explode("=", getURI());
+$titreFonction = "Liste des documents " . $partie[1];
+
 require '../include/initialisation.php';
 require RACINE . './include/head.php';
 ?>
