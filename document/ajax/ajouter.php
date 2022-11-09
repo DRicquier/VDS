@@ -1,23 +1,100 @@
 <?php
 require '../../include/initialisation.php';
 
-// ajout du pdf coté serveur
-$fichierCible = "fichier/";
-$fichierCible = $fichierCible . basename( $_FILES['file']['name']);
+const REP = "../../data/document/";
 
 
-    // ajout BDD
-    if (!isset($_POST['titre']) || !isset($_POST['ext']) || !isset($_POST['type'])) {
-        echo "Paramètre manquant";
-        exit;
+// contrôle de l'existence des paramètres attendus
+if (!isset($_FILES['fichier'])) {
+    echo "Il faut transmettre un fichier";
+    exit;
+}
+
+
+// détection d'une erreur lors de la transmission
+if ($_FILES['fichier']['error'] !== 0) {
+    echo "Aucun fichier reçu";
+    exit;
+}
+
+// récupération des données transmises
+$tmp = $_FILES['fichier']['tmp_name'];
+$nomFichier = $_FILES['fichier']['name'];
+$taille = $_FILES['fichier']['size'];
+$typeDeFichier = 'Club';
+$nbr = 4;
+$str = substr($nomFichier, 0, -$nbr);
+
+//contrôle afin de savoir si le fichier n'existe pas déjà
+require '../../class/class.database.php';
+$db = Database::getInstance();
+
+$sql = <<<EOD
+        select id from documents
+        where titre = :titre;
+EOD;
+$curseur = $db->prepare($sql);
+$curseur->bindParam(':titre', $str);
+$curseur->execute();
+$ligne = $curseur->fetch(PDO::FETCH_ASSOC);
+
+$fichier = REP . $nomFichier;
+if ($ligne) {
+    if (unlink($fichier)) {
+        $db = Database::getInstance();
+
+        $sql = <<<EOD
+        Delete from documents where titre = :titre;
+EOD;
+
+        $curseur = $db->prepare($sql);
+        $curseur->bindParam(':titre', $str);
+        $curseur->execute();
+        $ligne = $curseur->fetch(PDO::FETCH_ASSOC);
     }
 
-// récupération des paramètres
-    $titre = $_POST['titre'];
-    $ext =  $_POST['ext'];
-    $type =  $_POST['type'];
+}
+// Vérification du fichier
 
-// modification de la valeur du bandeau
+// vérification de la taille
+$tailleMax = 1 * 1024 * 1024;
+if ($taille > $tailleMax) {
+    echo "La taille du fichier ($taille) dépasse la taille autorisée ($tailleMax)";
+    exit;
+}
+
+// vérification de l'extension
+$lesExtensions = ["pdf"];
+$extension = pathinfo($nomFichier, PATHINFO_EXTENSION);
+if (!in_array($extension, $lesExtensions)) {
+    echo "Extension du fichier non acceptée : $extension";
+    exit;
+}
+
+// contrôle du type mime du fichier
+$lesTypes = ["application/force-download", "application/pdf"];
+$type = mime_content_type($tmp);
+if (!in_array($type, $lesTypes)) {
+    echo "Type de fichier non accepté : $type";
+    exit;
+}
+
+// récupération du nom du fichier sans son extension
+$nom = pathinfo($nomFichier, PATHINFO_FILENAME);
+
+// suppression des accents et autres caractères non alphanumériques et mise en minuscule
+$nom = strtolower(trim(($nom)));
+
+// Ajout éventuel d'un suffixe sur le nom en cas de doublon
+$nomFichier = "$nom.$extension";
+$i = 1;
+while (file_exists(REP . $nomFichier)) {
+    $nomFichier = "$nom($i).$extension";
+    $i++;
+}
+
+// copie sur le serveur
+if (copy($tmp, REP . $nomFichier)) {
     $db = Database::getInstance();
 
     $sql = <<<EOD
@@ -25,10 +102,9 @@ $fichierCible = $fichierCible . basename( $_FILES['file']['name']);
 EOD;
 
     $curseur = $db->prepare($sql);
-    $curseur->bindParam('titre', $titre);
-    $curseur->bindParam('type', $type);
-    $str = $titre . '.' . $ext;
-    $curseur->bindParam('fichier', $str);
+    $curseur->bindParam('titre', $str);
+    $curseur->bindParam('type', $typeDeFichier);
+    $curseur->bindParam('fichier', $nomFichier);
     try {
         $curseur->execute();
         echo 1;
@@ -37,6 +113,10 @@ EOD;
         echo substr($e->getMessage(), strrpos($e->getMessage(), '#') + 1);
     }
 
+    echo 1;
+} else {
+    echo "La copie du fichier sur le serveur a échoué";
+}
 
 
 

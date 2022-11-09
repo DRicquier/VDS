@@ -1,6 +1,17 @@
 <?php
 
-$titreFonction = "Liste des documents du Club";
+function getURI(){
+    $adresse = $_SERVER['PHP_SELF'];
+    $i = 0;
+    foreach($_GET as $cle => $valeur){
+        $adresse .= ($i == 0 ? '?' : '&').$cle.($valeur ? '='.$valeur : '');
+        $i++;
+    }
+    return $adresse;
+}
+$partie = explode("=", getURI());
+$titreFonction = "Liste des documents " . $partie[1];
+
 require '../include/initialisation.php';
 require RACINE . './include/head.php';
 ?>
@@ -11,7 +22,7 @@ require RACINE . './include/head.php';
     <div class="row">
         <div>
             <div class='table-responsive table-hover'>
-                <table>
+                <table style="margin-left: 30px">
                     <tbody id="lesDonnees"></tbody>
                 </table>
 
@@ -21,5 +32,5 @@ require RACINE . './include/head.php';
 </div>
 
 
-<?php require RACINE . '/include/pied.php'; ?>
+<?php require RACINE . './include/pied.php'; ?>
 
