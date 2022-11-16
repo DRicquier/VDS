@@ -10,14 +10,6 @@ class Database
     public static function getInstance()
     {
 
-        if (is_null(self::$_instance)) {
-
-            $dbHost = 'localhost';
-            $dbUser = 'root';
-            $dbPassword = '';
-            $dbBase =  'vds';
-            $dbPort = 3306;
-        /*
             if($_SERVER['SERVER_NAME'] === 'vds'){
                 $dbHost = 'vds';
                 $dbUser = 'root';
@@ -32,7 +24,7 @@ class Database
                 $dbBase =  'ricquier_vds';
                 $dbPort = 3306;
             }
-        */
+
             try {
                 $chaine = "mysql:host=$dbHost;dbname=$dbBase;port=$dbPort";
                 $db = new PDO($chaine, $dbUser, $dbPassword);
@@ -44,7 +36,7 @@ class Database
                echo "Accès à la base de données impossible, vérifiez les paramètres de connexion";
                exit();
             }
-        }
+
         return self::$_instance;
     }
 }

@@ -21,7 +21,7 @@ require RACINE . './include/head.php';
                 </table>
             </div>
             <input type="file" id="fichier" name="file" accept=".pdf" style='display: none '>
-            <div id="upload" class="upload text-center" style="width: 300px;height: 300px ;float: left; border-radius: 8px"
+            <div id="upload" class="upload text-center" style="width: 300px;height: 300px ;float: left; border-radius: 8px; margin-left: 10%"
                  data-bs-trigger="hover"
                  data-bs-html="true"
                  data-bs-title="<b>Règles à respecter<b>"

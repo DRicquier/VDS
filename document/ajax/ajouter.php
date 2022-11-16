@@ -22,36 +22,25 @@ $tmp = $_FILES['fichier']['tmp_name'];
 $nomFichier = $_FILES['fichier']['name'];
 $taille = $_FILES['fichier']['size'];
 $typeDeFichier = 'Club';
-$nbr = 4;
-$str = substr($nomFichier, 0, -$nbr);
 
 //contrôle afin de savoir si le fichier n'existe pas déjà
 require '../../class/class.database.php';
 $db = Database::getInstance();
 
-$sql = <<<EOD
-        select id from documents
-        where titre = :titre;
-EOD;
-$curseur = $db->prepare($sql);
-$curseur->bindParam(':titre', $str);
-$curseur->execute();
-$ligne = $curseur->fetch(PDO::FETCH_ASSOC);
 
 $fichier = REP . $nomFichier;
-if ($ligne) {
-    if (unlink($fichier)) {
-        $db = Database::getInstance();
+if (unlink($fichier)) {
+    $db = Database::getInstance();
 
-        $sql = <<<EOD
-        Delete from documents where titre = :titre;
+    $sql = <<<EOD
+        Delete from documents where fichier = :fichier;
 EOD;
 
-        $curseur = $db->prepare($sql);
-        $curseur->bindParam(':titre', $str);
-        $curseur->execute();
-        $ligne = $curseur->fetch(PDO::FETCH_ASSOC);
-    }
+    $curseur = $db->prepare($sql);
+    $curseur->bindParam(':fichier', $nomFichier);
+    $curseur->execute();
+    $ligne = $curseur->fetch(PDO::FETCH_ASSOC);
+
 
 }
 // Vérification du fichier

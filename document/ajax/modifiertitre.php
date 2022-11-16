@@ -77,16 +77,6 @@ if ($ligne) {
 
 // Aucun  erreur constatée : lancement de la mise à jour
 
-$AncienFichier = REP . $ligne8["titre"] . ".pdf";
-$FichierRename = REP . $titre . ".pdf";
-
-if(file_exists($AncienFichier)) {
-    if(!rename($AncienFichier, $FichierRename))
-        echo "Fichier non renommé";
-    else
-        echo "Votre fichier a été renommé";
-
-}
 
 $sql = <<<EOD
     update documents

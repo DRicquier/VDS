@@ -52,6 +52,7 @@ if (isset($_SESSION['membre'])) {
             </a>
 EOD;
         }
+
     }
 }
 

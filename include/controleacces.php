@@ -34,12 +34,12 @@ $db = Database::getInstance();
 $sql = <<<EOD
  Select 1
  From droit 
- where idAdministrateur = :idMembre
- and idFonction = :idFonction
+ where idMembre = :idMembre
+ and repertoire = :repertoire
 EOD;
 $curseur = $db->prepare($sql);
 $curseur->bindParam('idMembre', $idMembre);
-$curseur->bindParam('idFonction', $idFonction);
+$curseur->bindParam('repertoire', $repertoire);
 $curseur->execute();
 $ligne = $curseur->fetchObject();
 if (!$ligne) {

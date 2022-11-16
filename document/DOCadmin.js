@@ -29,6 +29,7 @@ function init() {
     upload.ondrop = (e) => {
         e.preventDefault();
         controlerFichier(e.dataTransfer.files[0]);
+        valider.style.visibility = fichier == null ? "hidden" : "visible";
 }
 
 function afficher(data) {
@@ -240,7 +241,7 @@ function afficherData(data) {
                 url: 'ajax/supprimer.php',
                 type: 'POST',
                 data: {
-                    nomFichier: documents.titre,
+                    id: documents.id,
                 },
                 dataType: "json",
                 error: (reponse) => Std.afficherErreur(reponse.responseText),
