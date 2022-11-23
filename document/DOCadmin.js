@@ -36,7 +36,7 @@ function init() {
 
 
     }
-
+    //fonction pour ajouter un document
     function ajouter () {
 
         if (leFichier == null) {
@@ -46,7 +46,7 @@ function init() {
 
         let monFormulaire = new FormData();
         monFormulaire.append('fichier', leFichier );
-
+        //Appel coté serveur
         $.ajax({
             url: 'ajax/ajouter.php',
             type: 'POST',
@@ -64,12 +64,14 @@ function init() {
                     error: reponse => console.error(reponse.responseText),
                     success: afficherData
                 });
+                messageCible.innerText = "";
+                leFichier = null;
             },
             error: (reponse) => Std.afficherErreur(reponse.responseText)
         })
 
 }
-
+//affiche les données de chaque document
 function afficherData(data) {
     document.getElementById("lesDonnees").innerHTML = '';
     for (let documents of data) {
@@ -77,7 +79,7 @@ function afficherData(data) {
 
     }
 }
-
+//affiche la ligne pour le document qui est passé en paramètre
 function afficherLesLignes(documents){
     let a = document.getElementById("lesDonnees").insertRow();
     a.classList.add("active","mx-4","my-2");
@@ -110,18 +112,17 @@ function afficherLesLignes(documents){
         })
     };
     a.insertCell().appendChild(titreF);
-
+    //création du select
     let typeListe = document.createElement('select');
     typeListe.style.width = "150px";
     typeListe.id = "idDocumentSelectionne" + documents.id;
     typeListe.classList.add('form-select');
 
 
-
+    // Je crée un tableau contenant les trois types de fichier
     let touslesTypes = ['Club', '4 saisons', 'Membre'];
 
-
-
+    //affiche les types pour chaque document et met par défaut celui qui leur est attribué à l'origine
     for (const type of touslesTypes) {
         let option;
         if (type === documents.type) {
@@ -133,7 +134,8 @@ function afficherLesLignes(documents){
     }
 
     a.insertCell().appendChild(typeListe);
-
+    // Lorsqu'on selectionne un autre type qui celui d'origine, celui l'envois coté serveur
+    // pour q'on le mette à jour dans la base de donnée
     typeListe.onchange = () => {
         if (!Std.verifier(titreF)) return ;
         $.ajax({
@@ -174,6 +176,7 @@ function afficherLesLignes(documents){
     buttonSupprimer.appendChild(btnSuppIcon);
     a.appendChild(buttonSupprimer);
 
+    //fonction du bouton supprimer
     buttonSupprimer.onclick = () => {
         $.ajax({
             url: 'ajax/supprimer.php',
@@ -199,6 +202,8 @@ function afficherLesLignes(documents){
     }
 
 }
+
+//Fonction qui va controler le document tranmis
 function controlerFichier(file) {
     // effacer le message de la zone cible et initialiser la variable leFichier
     messageCible.innerHTML = "";

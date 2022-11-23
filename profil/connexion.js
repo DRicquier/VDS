@@ -77,23 +77,10 @@ function connecter() {
             error: reponse => {
                 msg.innerHTML = Std.genererMessage(reponse.responseText)
             },
-            success: () => {
-                if (password.value === "0000") {
-                    location.href = '/profil/personnalisationpassword.php'
-                } else {
-                    location.href = "/index.php"
-                }
-            }
-            /*
             success: (url) => {
-                if (password.value == "0000") {
-                    location.href = '/profil/personnalisationpassword.php'
-                } else {
-                    location.href = url
-                }
+                    location.href = url;
             }
 
-             */
         })
     }
 }

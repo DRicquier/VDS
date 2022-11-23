@@ -28,8 +28,10 @@ if ($ligne && $ligne['password'] === hash('sha256', $password)) {
     $_SESSION['membre']['id'] = $ligne['id'];
     $_SESSION['membre']['login'] = $ligne['login'];
     $_SESSION['membre']['nomPrenom'] = $ligne['prenom'] . ' ' . $ligne['nom'];
-
-    if (isset($_SESSION['url'])) {
+    if($password ==='0000'){
+        echo json_encode('personnalisationpassword.php');
+    }
+    else if (isset($_SESSION['url'])) {
         echo json_encode($_SESSION['url']);
         unset($_SESSION['url']);
     } else {
