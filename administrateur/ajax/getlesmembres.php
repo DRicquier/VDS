@@ -2,7 +2,7 @@
 
 /**
  *  récupération des membres qui ne sont pas des administrateurs
- * Appel : administration/club.js
+ * Appel : administration/index.js
  */
 
 require '../../include/initialisation.php';

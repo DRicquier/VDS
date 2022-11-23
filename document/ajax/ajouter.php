@@ -29,7 +29,7 @@ $db = Database::getInstance();
 
 
 $fichier = REP . $nomFichier;
-if (unlink($fichier)) {
+if (@unlink($fichier)) {
     $db = Database::getInstance();
 
     $sql = <<<EOD
@@ -40,6 +40,7 @@ EOD;
     $curseur->bindParam(':fichier', $nomFichier);
     $curseur->execute();
     $ligne = $curseur->fetch(PDO::FETCH_ASSOC);
+
 
 
 }
@@ -91,7 +92,7 @@ if (copy($tmp, REP . $nomFichier)) {
 EOD;
 
     $curseur = $db->prepare($sql);
-    $curseur->bindParam('titre', $str);
+    $curseur->bindParam('titre', $nom);
     $curseur->bindParam('type', $typeDeFichier);
     $curseur->bindParam('fichier', $nomFichier);
     try {
@@ -102,7 +103,6 @@ EOD;
         echo substr($e->getMessage(), strrpos($e->getMessage(), '#') + 1);
     }
 
-    echo 1;
 } else {
     echo "La copie du fichier sur le serveur a échoué";
 }

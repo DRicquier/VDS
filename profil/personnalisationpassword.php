@@ -5,8 +5,13 @@
  * Remarque : N'utilise pas le script initialisation.php ou message d'erreur
  */
 
-require '../include/initialisation.php';
-require RACINE . './include/head.php';
+session_start();
+define('RACINE', $_SERVER['DOCUMENT_ROOT']);
+
+$titreFonction = "Personnaliser mon mot de passe";
+
+require RACINE . '/include/head.php';
+
 ?>
 <script src="personnalisationpassword.js"></script>
 <div id="msg" class="m-3"></div>

@@ -71,7 +71,6 @@ function init() {
                 if (lesValeurs.length === 0) {
                     messageNomPrenom.innerText = "Aucun nom ne correspond";
                 }
-
             }
         }
     }
@@ -150,27 +149,27 @@ function ajouterAdministrateur() {
             success: function () {
                 // ajout dans la zone de liste
                 idMembre.add(new Option(nomPrenom.value, id));
-                id = null;
+                idMembre.selectedIndex = idMembre.length - 1;
 
+                //decocher les cases
+                decocherCase();
+
+                // effacement des données
+                //$nomPrenom.val('');
+                //id = null;
                 // fermeture de la fenêtre modale
                 $("#frmAjout").modal("hide")
+                //Std.afficherSucces('Administrateur ajouté');
                 let parametre = {
-                    message : "<div class='m-3' style='text-align: justify'>" + nomPrenom.value + ' fait maintenant partie des administrateurs. Il vous reste à sélectionner les modules qu il peut gérer',
-                    type : 'success',
-                    fermeture : 1,
+                    message: "<div class=m-3' style='text-align: justify'>" + nomPrenom.value + " fait maintenant parti des administrateurs, il faut maintenat selectionner les modules qu'il peut creer",
+                    type: 'success',
+                    fermeture: 1,
                     surFermeture: function () {
-                        // effacement des données
                         $nomPrenom.val('');
                         id = null;
                     }
                 }
                 Std.afficherMessage(parametre);
-
-                //Std.afficherSucces('Administrateur ajouté');
-                let nb = idMembre.length - 1;
-                idMembre.selectedIndex = nb;
-                decocherCase();
-
             },
             error: reponse => msgFrmAjout.innerHTML = Std.genererMessage(reponse.responseText),
         });
@@ -235,7 +234,7 @@ function supprimerTousLesDroits() {
 }
 
 /**
- * ajouter.php tous les droits
+ * Ajouter tous les droits
  * Toutes les cases sont cochées sur l'interface
  */
 function ajouterTousLesDroits() {

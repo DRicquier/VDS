@@ -89,7 +89,7 @@ function modifier() {
                     type: 'success',
                     fermeture: 1,
                     surFermeture: function () {
-                        document.location.href = "/club.php"
+                        document.location.href = "/index.php"
                     }
                 }
                 Std.afficherMessage(parametre);

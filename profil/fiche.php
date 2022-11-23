@@ -6,7 +6,15 @@
  */
 
 require '../include/initialisation.php';
+
 Std::necessiteConnexion();
+
+/*
+if (!isset($_SESSION['membre'])) {
+    Std::traiterErreur("Vous devez vous connecter pour accéder à cette fonctionnalité");
+}
+*/
+
 $titreFonction = "Renseigner ma fiche membre";
 require RACINE . '/include/head.php';
 

@@ -2,7 +2,7 @@
 
 /**
  *  ajouter tous les droits pour l'administrateur dont l'id est transmis
- * Appel : club.js
+ * Appel : index.js
  */
 
 

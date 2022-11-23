@@ -88,6 +88,7 @@ $curseur->bindParam('titre', $titre);
 $curseur->bindParam('id', $id);
 try {
     $curseur->execute();
+    echo 1;
 } catch (Exception $e) {
     echo substr($e->getMessage(), strrpos($e->getMessage(), '#') + 1);
 }

@@ -9,38 +9,29 @@ require RACINE . './include/head.php';
 
 <div>
 
-    <button class="btn btn-primary" type="submit" id="ajouter">Ajouter</button>
 
-    <br>
-    <br>
-    <div id="main" class="row">
+    <div id="main" class="row" style="padding: 20px">
         <div style ="clear: both;">
+            <div id="upload" class="upload text-center" style="width: 300px;height: 150px ; border-radius: 8px; margin-left: 7%"
+                 data-bs-trigger="hover"
+                 data-bs-html="true"
+                 data-bs-title="<b>Règles à respecter<b>"
+                 data-bs-content="<strong>Pdf uniquement<strong><br>Taille limitée à 1 Mo">
+                <i class="bi bi-cloud-upload" style="font-size: 4rem; color: #8b8a8a;"></i>
+                <div>Cliquez ou déposer le document PDF que vous voulez ajouter</div>
+                <span id='messageCible'></span>
+            </div>
+            <br>
+            <br>
             <div class='table-responsive table-hover' style="width: 800px; float: left">
                 <table style="margin-left: 30px">
                     <tbody id="lesDonnees"></tbody>
                 </table>
             </div>
             <input type="file" id="fichier" name="file" accept=".pdf" style='display: none '>
-            <div id="upload" class="upload text-center" style="width: 300px;height: 300px ;float: left; border-radius: 8px; margin-left: 10%"
-                 data-bs-trigger="hover"
-                 data-bs-html="true"
-                 data-bs-title="<b>Règles à respecter<b>"
-                 data-bs-content="<strong>Pdf uniquement<strong><br>Taille limitée à 1 Mo">
-                <i class="bi bi-cloud-upload" style="font-size: 4rem; color: #8b8a8a;"></i>
-                <div>Cliquez ou déposer le document PDF ici</div>
-            </div>
-
-        </div>
-        </br>
-        <div class="text-center mt-1">
-            <button class="btn btn-primary" type="submit" id="valider">Valider</button>
-            <span id='messageCible'></span>
-        </div>
-        <div id="ajoutFichier"></div>
 
     </div>
 
-    </br>
 </div>
 
 

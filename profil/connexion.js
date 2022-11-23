@@ -59,6 +59,12 @@ function init() {
  * en absence d'erreur la demande de connexion est envoyée au serveur
  */
 function connecter() {
+    /*
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+    let redirect = params.redirect;
+     */
 
     if (Std.donneesValides()) {
         // demande de connexion
@@ -68,14 +74,26 @@ function connecter() {
             type: 'POST',
             data: {login: login.value, password: password.value},
             dataType: 'json',
-            error: reponse => { msg.innerHTML = Std.genererMessage(reponse.responseText)},
+            error: reponse => {
+                msg.innerHTML = Std.genererMessage(reponse.responseText)
+            },
             success: () => {
-                    if(password.value === '0000'){
-                        location.href = '/profil/personnalisationpassword.php'
-                    }
-                    else
-                        location.href = "/index.php";
+                if (password.value === "0000") {
+                    location.href = '/profil/personnalisationpassword.php'
+                } else {
+                    location.href = "/index.php"
+                }
             }
+            /*
+            success: (url) => {
+                if (password.value == "0000") {
+                    location.href = '/profil/personnalisationpassword.php'
+                } else {
+                    location.href = url
+                }
+            }
+
+             */
         })
     }
 }

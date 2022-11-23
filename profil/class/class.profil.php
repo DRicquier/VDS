@@ -3,7 +3,6 @@
 class Profil
 {
     /**
-     * Retourner le login et l'email de l'utilisateur
      * @param string $nom Nom du membre
      * @param string $prenom PRénom du membre
      * @return array|bool
@@ -30,11 +29,6 @@ EOD;
         }
     }
 
-    /**
-     * Retourne l'id, le login, le nom, le prénom et le mdp de l'utilisateur à partir de son login
-     * @param string $login
-     * @return array|bool
-     */
     public static function getMembreByLogin(string $login): array | bool
     {
         $sql = <<<EOD
@@ -75,17 +69,13 @@ EOD;
             return $ligne;
 
         } catch (Exception $e) {
+
+            $erreur = "Erreur innattendue, nous recherchons une solution au problème";
             return false;
         }
     }
 
-    /**
-     * retourne le nom, le prénom, la concaténation nom prénom,
-     * l'email ou 'non communiqué' si autMail = false
-     * telephone ou 'non renseigné' si telephone is null
-     * photo ou 'non renseigné' si photo is null
-     * @return array
-     */
+
     public static function getLesMembres() : array {
         $db = Database::getInstance();
         $sql = <<<EOD
@@ -102,14 +92,7 @@ EOD;
         return $lesLignes;
     }
 
-    /**
-     * Modifier la valeur d'une colonne (telephone, photo) d'un enregistrement de la table membre
-     * @param string $colonne
-     * @param string $valeur
-     * @param int $id
-     * @param string $erreur
-     * @return bool
-     */
+
     public static function modifierColonne(string $colonne, string $valeur, int $id, string &$erreur) : bool {
         $db = Database::getInstance();
         $ok = true;

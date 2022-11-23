@@ -23,6 +23,3 @@ spl_autoload_register(function ($name) {
         require RACINE . "/$name/class/class.$name.php";
 });
 
-
-// Accès aux variables de session
-session_start();

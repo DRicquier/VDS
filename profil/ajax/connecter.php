@@ -11,10 +11,13 @@
 require '../../include/initialisation.php';
 
 // récupération des données
+
 $login = $_POST["login"];
 $password = $_POST["password"];
-if($password === '0000')
+
+if ($password === '0000') {
     $_SESSION['personnaliser'] = 1;
+}
 
 // contrôle
 // vérification du login
@@ -25,12 +28,21 @@ if ($ligne && $ligne['password'] === hash('sha256', $password)) {
     $_SESSION['membre']['id'] = $ligne['id'];
     $_SESSION['membre']['login'] = $ligne['login'];
     $_SESSION['membre']['nomPrenom'] = $ligne['prenom'] . ' ' . $ligne['nom'];
+
     if (isset($_SESSION['url'])) {
         echo json_encode($_SESSION['url']);
-        unset($_SESSION['url']); }
-    else {
+        unset($_SESSION['url']);
+    } else {
         echo json_encode('/index.php');
     }
+
+    /*
+    if (isset($_SERVER['HTTP_REDIRECT'])) {
+        echo "{\"value\":\"" . $_SERVER['HTTP_REDIRECT'] . "\"}";
+        exit;
+    }
+    */
+
 } else {
     echo "Il y a une erreur dans votre saisie. <br> Veuillez vérifier les informations.";
 }

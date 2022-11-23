@@ -29,9 +29,7 @@ function init() {
                 data: {nom: nom.value, prenom: prenom.value},
                 dataType: "json",
                 error: (reponse) => {
-                    //msg.innerHTML = Std.genererMessage(reponse.responseText, 'rouge')
-                    std.afficherErreur(reponse.responseText);
-                    btnEnvoyer.disabled = false;
+                    msg.innerHTML = Std.genererMessage(reponse.responseText, 'rouge')
                 },
                 success: () => {
                     msg.innerHTML = Std.genererMessage("Votre login vient de vous êtes envoyé par mail", 'vert')

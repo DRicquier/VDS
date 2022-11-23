@@ -8,11 +8,12 @@
  * Remarque : le script initialisation est toujours appelé avant ce qui garantit l'existence de la constante RACINE
  */
 
-
 // premier contrôle : le visiteur doit être connecté
 Std::necessiteConnexion();
 
-
+if (!isset($_SESSION['membre'])) {
+    Std::traiterErreur("Vous devez vous connecter pour avoir accès à cette fonctionnalité");
+}
 
 // le script appelé demande une autorisation d'accès
 // le repertoire contenant ce script doit faire partir des répertoires accessibles par le membre connecté
@@ -21,29 +22,33 @@ Std::necessiteConnexion();
 //Comment récupérer le répertoire ?
 // on peut connaitre le nom complet du script en cours avec $_SERVER['PHP_SELF'] : /repertoire/sousrepertoire/fichier.php
 // il suffit de découper ce nom sur le caractère '/' et prendre le second élément
-$fichier = $_SERVER['PHP_SELF'];
-$elements = explode('/', $fichier);
+$ficher = $_SERVER['PHP_SELF'];
+$elements = explode("/", $ficher);
 $repertoire = $elements[1];
 
 // récupération de l'id du membre
 // L'id du membre est quant à lui stocké dans la variable de session membre
-$idMembre = $_SESSION["membre"]['id'];
+$idMembre = $_SESSION['membre']['id'];
 
-// il faut être autorisé : Vérification dans la table droit
 $db = Database::getInstance();
 $sql = <<<EOD
  Select 1
- From droit 
+ From droit
  where idMembre = :idMembre
- and repertoire = :repertoire
+ and repertoire = :idFonction
 EOD;
 $curseur = $db->prepare($sql);
 $curseur->bindParam('idMembre', $idMembre);
-$curseur->bindParam('repertoire', $repertoire);
+$curseur->bindParam('idFonction', $repertoire);
 $curseur->execute();
 $ligne = $curseur->fetchObject();
+
 if (!$ligne) {
     $_SESSION['erreur'] = "Vous n’êtes pas autorisé à accéder à cette fonctionnalité";
     header('location:/erreur');
     exit;
 }
+
+
+
+// il faut être autorisé : Vérification dans la table droit
