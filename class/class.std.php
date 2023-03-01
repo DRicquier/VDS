@@ -22,7 +22,7 @@ class Std
      * une quatrième donnée 'unicite' de valeur 1 peut être transmise s'il faut vérifier que la valeur est unique
      * @param string $table nom de la table
      */
-    public static function update(string $table) : int | string
+    public static function update(string $table): int|string
     {
         if (!Controle::existe('colonne', 'valeur', 'id')) {
             return "Paramètre manquant";
@@ -135,30 +135,37 @@ EOD;
 // ------------------------------------------------------------------------------
 
     /**
-     * Mémoriser l'erreur dans le fichier erreur.log et rediriger  l'utilisateur vers la page erreur/club.php
+     * Mémoriser l'erreur dans le fichier erreur.log et rediriger  l'utilisateur vers la page erreur/index.php
      * @param string $libelle Libellé de l'erreur
      * @return void
      */
-    public static function traiterErreur(string $libelle) : void
+    public static function traiterErreur(string $libelle): void
     {
 
         $_SESSION['erreur'] = $libelle;
-        header("location:/erreur/club.php");
+        header("location:/erreur/index.php");
         exit;
     }
 
     /**
-     * mémoriser l'erreur dans le fichier erreur.log afficher l'ereurr et arrêter le script
+     * mémoriser l'erreur dans le fichier erreur.log afficher l'ereurr et arrêter le sript
      * @param string $libelle Libellé de l'erreur
      * @return void
      */
-    public static function traiterErreurAjax(string $libelle) : void
+    public static function traiterErreurAjax(string $libelle): void
     {
 
         echo $libelle;
         exit;
     }
-    public static function necessiteConnexion(): void {
+
+    /**
+     * Rediriger vers la page de connexion quand un utilisateur n'est pas connecté
+     *
+     * @return void
+     */
+    public static function necessiteConnexion(): void
+    {
         if (!isset($_SESSION['membre'])) {
             $_SESSION['url'] = $_SERVER['PHP_SELF'];
             header("location:/profil/connexion.php");
@@ -166,18 +173,44 @@ EOD;
         }
     }
 
-
 // ------------------------------------------------------------------------------
 // méthode concernant la traçabilité
 // ------------------------------------------------------------------------------
 
+    public static function getIp(): string
+    {
+        $ip = getenv("REMOTE_ADDR");
+        return $ip;
+    }
 
-
+    public static function tracerDemande($nom, $parametre) {
+        $fichier = fopen(RACINE . "/data/log/$nom.csv", "a");
+        $ligne = date('d/m/Y H:i:s') . "\t" . $_SERVER['PHP_SELF'] . "\t" . $parametre . "\n";
+        fwrite($fichier, $ligne);
+    }
 
 
 // ------------------------------------------------------------------------------
 // méthode concernant les statistiques
 // ------------------------------------------------------------------------------
 
+    public static function comptabiliserVisite(): void {
+        $db = Database::getInstance();
+        $db->exec("call comptabiliserVisite()");
+    }
+
+    public static function enregistrerConnexion(int $id): void {
+        $db = Database::getInstance();
+        $curseur = $db->prepare("call enregistrerNbConnexion(:id)");
+        $curseur->bindParam("id", $id);
+        $curseur->execute();
+    }
+
+    public static function majStatistique(string $nom): void {
+        $db = Database::getInstance();
+        $curseur = $db->prepare("call majStatistique(:nom)");
+        $curseur->bindParam("nom", $nom);
+        $curseur->execute();
+    }
 
 }

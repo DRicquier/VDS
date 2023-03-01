@@ -3,7 +3,7 @@
  *  Ajout des modules de l'application
  *  Suppression des modules inexistants
  *  un module correspond à un répertoire
- * Appel : club.php
+ * Appel : index.php
  */
 
 $titreFonction = "Gestion des modules";

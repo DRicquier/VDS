@@ -10,13 +10,11 @@
 
 require '../../include/initialisation.php';
 
-//vérification des données attendues
-if(!Controle::existe('login','password','memoriser')) {
-    echo "Paramètres manquants";
+// vérification des données attendues
+if (!Controle::existe("login", "password", "memoriser")) {
+    echo "Paramètre manquant";
     exit;
 }
-
-
 
 // récupération des données
 
@@ -38,33 +36,53 @@ if ($ligne && $ligne['password'] === hash('sha256', $password)) {
     $_SESSION['membre']['login'] = $ligne['login'];
     $_SESSION['membre']['nomPrenom'] = $ligne['prenom'] . ' ' . $ligne['nom'];
 
-    if($memoriser === '1'){
+    // enregistrer la connexion
+    Std::enregistrerConnexion($ligne['id']);
+
+    if ($memoriser === '1') {
         $empreinte = hash('sha256', $ligne['prenom'] . $login . $ligne['nom'] . $_SERVER['HTTP_USER_AGENT']);
         $option['expires'] = time() + 3600 * 24 * 7;
         $option['path'] = '/';
         $option['httponly'] = true;
         setcookie('seSouvenir', $empreinte, $option);
     }
-    //prise en compte de l'url initialement demandée
-    if($password ==='0000'){
+
+    if ($password === "0000") {
         echo json_encode('personnalisationpassword.php');
-    }
-    else if (isset($_SESSION['url'])) {
+    } elseif (isset($_SESSION['url'])) {
         echo json_encode($_SESSION['url']);
         unset($_SESSION['url']);
     } else {
         echo json_encode('/index.php');
     }
 
-    /*
-    if (isset($_SERVER['HTTP_REDIRECT'])) {
-        echo "{\"value\":\"" . $_SERVER['HTTP_REDIRECT'] . "\"}";
+} else {
+    // echo "Il y a une erreur dans votre saisie. <br> Veuillez vérifier les informations.";
+
+    $ip = Std::getIp();
+
+    // mémoriser la tentative
+    Profil::enregistrerTentative($login, $password, $ip);
+
+    // récupérer le nombre de tentatives
+    $nbTentative = Profil::getNbTentatives($login, $ip);
+
+    if ($nbTentative >= 5) {
+        $_SESSION['erreur'] = "Trop de tentatives de connexion, veuillez attendre 10 minutes avant une nouvelle tentative";
+        echo json_encode('/erreur/index.php');
         exit;
     }
-    */
 
-} else {
-    echo "Il y a une erreur dans votre saisie. <br> Veuillez vérifier les informations.";
+    $msg = "Il y a une erreur dans votre saisie.";
+    $msg .= "<br>Veuillez vérifier les informations.";
+    $msg .= "<br>Il vous reste ";
+    if ($nbTentative === 4) {
+        $msg .= "une seule tentative !";
+    } else {
+        $msg .= (5 - $nbTentative) . " tentatives.";
+    }
+
+    echo $msg;
 }
 
 

@@ -29,6 +29,7 @@ EOD;
 
 <!DOCTYPE html>
 <html lang="fr">
+<body>
 <head>
     <title>Amicale du Val de Somme</title>
     <meta charset="utf-8">
@@ -67,7 +68,7 @@ EOD;
            class="btn btn-outline-secondary"
            title='Revenir à la page prècédente'
            data-bs-toggle='tooltip'
-           date-bs-placement='left'>
+           data-bs-placement='left'>
             <i class="bi bi-caret-left"></i>
         </a>
         <a href="/index.php" class="btn btn-outline-secondary ">
@@ -75,7 +76,7 @@ EOD;
                class="btn btn-outline-secondary"
                title="Revenir sur la page d'accueil"
                data-bs-toggle="tooltip"
-               date-bs-placement='left'></i>
+               data-bs-placement='left'></i>
         </a>
     </div>
     <main id="main" class="flex-grow-1 mx-3 ">

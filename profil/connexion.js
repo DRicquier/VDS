@@ -68,20 +68,27 @@ function connecter() {
 
     if (Std.donneesValides()) {
         // demande de connexion
-        let memoriser = chkMemoriser.checked ? 1 : 0;
+        let memoriser = document.getElementById("chkMemoriser").checked ? 1 : 0;
 
         $.ajax({
             url: 'ajax/connecter.php',
             type: 'POST',
-            data: {login: login.value, password: password.value, memoriser : memoriser},
+            data: {login: login.value, password: password.value, "memoriser": memoriser},
             dataType: 'json',
             error: reponse => {
                 msg.innerHTML = Std.genererMessage(reponse.responseText)
             },
+            success: (url) => location.href = url
+            /*
             success: (url) => {
-                    location.href = url;
+                if (password.value == "0000") {
+                    location.href = '/profil/personnalisationpassword.php'
+                } else {
+                    location.href = url
+                }
             }
 
+             */
         })
     }
 }

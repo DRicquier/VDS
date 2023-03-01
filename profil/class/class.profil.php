@@ -2,12 +2,44 @@
 
 class Profil
 {
+
+    public static function getNbTentatives(string $login, string $ip): int
+    {
+        $sql = <<<EOD
+select count(*) from tentative
+where (login = :login or ip = :ip)
+  and date > now() - interval 10 minute;
+EOD;
+        $db = Database::getInstance();
+        $curseur = $db->prepare($sql);
+        $curseur->bindParam('login', $login);
+        $curseur->bindParam('ip', $ip);
+        $curseur->execute();
+        $valeur = $curseur->fetchColumn(0);
+        $curseur->closeCursor();
+        return $valeur;
+    }
+
+    public static function enregistrerTentative(string $login, string $password, string $ip): void
+    {
+        $sql = <<<EOD
+          insert into tentative(login, password, ip) values(:login, :password, '$ip')
+EOD;
+
+        $db = Database::getInstance();
+        $curseur = $db->prepare($sql);
+        $curseur->bindParam('login', $login);
+        $curseur->bindParam('password', $password);
+        $curseur->execute();
+        $curseur->closeCursor();
+    }
+
     /**
      * @param string $nom Nom du membre
      * @param string $prenom PRénom du membre
      * @return array|bool
      */
-    public static function getMembreByNomPrenom(string $nom, string $prenom): array | bool
+    public static function getMembreByNomPrenom(string $nom, string $prenom): array|bool
     {
         $sql = <<<EOD
             SELECT login, email
@@ -29,7 +61,7 @@ EOD;
         }
     }
 
-    public static function getMembreByLogin(string $login): array | bool
+    public static function getMembreByLogin(string $login): array|bool
     {
         $sql = <<<EOD
             SELECT id, login, nom, prenom, password
@@ -51,8 +83,7 @@ EOD;
     }
 
 
-
-    public static function getMembreById(string $id ): array | bool
+    public static function getMembreById(string $id): array|bool
     {
         $db = Database::getInstance();
         $sql = <<<EOD
@@ -76,7 +107,8 @@ EOD;
     }
 
 
-    public static function getLesMembres() : array {
+    public static function getLesMembres(): array
+    {
         $db = Database::getInstance();
         $sql = <<<EOD
             Select nom, prenom, concat(nom, ' ', prenom) as nomPrenom,   
@@ -93,7 +125,8 @@ EOD;
     }
 
 
-    public static function modifierColonne(string $colonne, string $valeur, int $id, string &$erreur) : bool {
+    public static function modifierColonne(string $colonne, string $valeur, int $id, string &$erreur): bool
+    {
         $db = Database::getInstance();
         $ok = true;
         $erreur = "";
@@ -108,13 +141,14 @@ EOD;
         try {
             $curseur->execute();
         } catch (Exception $e) {
-            $erreur = substr($e->getMessage(),strrpos($e->getMessage(), '#') + 1);
+            $erreur = substr($e->getMessage(), strrpos($e->getMessage(), '#') + 1);
             $ok = false;
         }
         return $ok;
     }
 
-    public static function effacerColonne(string $colonne, int $id, string &$erreur) : bool {
+    public static function effacerColonne(string $colonne, int $id, string &$erreur): bool
+    {
         $db = Database::getInstance();
         $ok = true;
         $erreur = "";
@@ -128,13 +162,14 @@ EOD;
         try {
             $curseur->execute();
         } catch (Exception $e) {
-            $erreur = substr($e->getMessage(),strrpos($e->getMessage(), '#') + 1);
+            $erreur = substr($e->getMessage(), strrpos($e->getMessage(), '#') + 1);
             $ok = false;
         }
         return $ok;
     }
 
-    public static function enregistrerTelephone(int $id, string $telephone) : int | string {
+    public static function enregistrerTelephone(int $id, string $telephone): int|string
+    {
         $db = Database::getInstance();
         $sql = <<<EOD
             Update membre 
@@ -148,7 +183,7 @@ EOD;
             $curseur->execute();
             return 1;
         } catch (Exception $e) {
-            return substr($e->getMessage(),strrpos($e->getMessage(), '#') + 1);
+            return substr($e->getMessage(), strrpos($e->getMessage(), '#') + 1);
         }
     }
 }

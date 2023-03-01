@@ -21,7 +21,7 @@ require RACINE . '/include/head.php';
         </div>
         <div class="card-body">
             <div id="msg" class="m-3"></div>
-            <div id="zone1" style="display:none">
+            <div id="zone1" style="display:block">
                 <div class="form-group text-left">
                     <label class='' for="login">Entrez votre login, nous allons vous envoyer par mail un code pour
                         réinitialiser votre mot de passe.</label>
