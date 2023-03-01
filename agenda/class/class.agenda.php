@@ -8,22 +8,38 @@ class Agenda extends Table
     public function __construct()
     {
         // appel du contructeur de la classe parent
-       
+        parent::__construct('agenda');
 
         // identifiant de la table
-      
+        $input = new InputInt();
+        $input->Require = false; // auto-incrément
+        $input->Unique = true;
+        $this->columns['id'] = $input;
 
         // le nom doit être renseigné,
         // commencer par une lettre ou un chiffre
         // se terminer par une lettre, un chiffre ou !
         // contenir entre 10 et 70 caractères
-       
+        $input = new InputTexte();
+        $input->Require = true;
+        $input->Unique = true;
+        $input->Pattern = "^[0-9A-Za-zÀÇÈÉÊàáâçèéêëî]((.)*[0-9A-Za-zÀÇÈÉÊàáâçèéêëî!])*$";
+        $input->MinLength = 10;
+        $input->MaxLength = 70;
+        $this->columns['nom'] = $input;
 
         // la date ne doit pas être inférieure à la date du jour
-       
+        $input = new InputDate();
+        $input->Require = true;
+        $input->Unique = false;
+        $input->Min = date("Y-m-d");
+        $this->columns['date'] = $input;
 
         // la description est optionnelle
-
+        $input = new InputTextarea();
+        $input->Require = false;
+        $input->Unique = false;
+        $this->columns['description'] = $input;
         
     }
 
@@ -32,7 +48,7 @@ class Agenda extends Table
     public static function getLesEvenements()
     {
         $sql = <<<EOD
-			Select id, nom, date_format(date, '%d/%m/%Y') as dateFr
+			Select id, nom, date_format(date, '%d/%m/%Y') as dateFr, if(date < current_date, 1, 0) as old
             From agenda
             Order by date desc;
 EOD;
@@ -71,7 +87,7 @@ EOD;
 
     // Suppression de tous les enregistrements dont la date est dépassée
     public function epurer() {
-        $nb = 
+        $nb = $this->remove("date < curdate()");
         if ($nb === - 1) {
            $reponse =  ["error" => $this->validationMessage];
         } elseif ($nb === 0) {

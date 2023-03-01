@@ -6,7 +6,7 @@
 </div>
 <div class='table-responsive'>
     <div class='table-responsive'>
-        <table class='table table-sm table-borderless table-hover '>
+        <table class='table table-sm table-borderless table-hover tablesorter-bootstrap' id="leTableau">
             <thead>
             <tr>
                 <th style="width: 100px">Action</th>

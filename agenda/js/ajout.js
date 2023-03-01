@@ -25,7 +25,19 @@ window.onload = () => {
             processData: false,
             dataType: 'json',
             success: (data) => {
-               
+               if(data.error) {
+                   for(const erreur of data.error) {
+                       if(erreur.champ === "msg"){
+                           msg.innerHTML = Std.genererMessage(erreur.message);
+                       }
+                       else {
+                           let champ = document.getElementById('msg' + erreur.champ);
+                           champ.innerText = erreur.message;
+                       }
+                   }
+               } else {
+                   Std.retournerVers(data.success, 'index.php');
+               }
 			   
             },
             error: (reponse) => {

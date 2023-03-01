@@ -2,16 +2,20 @@
 
 window.onload = () => {
     // drapeau permettant de savoir si on a au moins une ligne supprimable et ainsi d'afficher ou de masque le bouton epurer
-
+    let old = false;
     for (const element of data) {
         let id = element.id;
         let tr = lesLignes.insertRow();
         tr.id = id;
         tr.style.verticalAlign = 'middle';
+
         // on marque les lignes pour savoir si elles font parties des lignes à effacer ou pas
-
+        tr.dataset.old = element.old;
         // on change la couleur de fond des lignes qui font parties de l'épuration
-
+        if(element.old == 1) {
+            old = true;
+            tr.style.backgroundColor = '#B0B0B0';
+        }
 
         // colonne contenant des boutons de suppression et de modification
         let td = tr.insertCell();
@@ -35,8 +39,13 @@ window.onload = () => {
         // colonne nom
         tr.insertCell().innerText = element.nom;
     }
+    $("#leTableau").tablesorter({ headers: { 0: { sorter: false}}});
     // si le drapeau est vrai il faut afficher le bouton et définir son événement click
+    if(old == true){
+        btnEpurer.style.visibility = 'visible';
 
+        btnEpurer.onclick = () =>  Std.confirmer(epurer);
+    }
 }
 
 /**
@@ -51,9 +60,14 @@ function supprimer(id) {
         data: {id: id},
         dataType: "json",
         success: (data) => {
-            
-			
-			
+            if(data.success) {
+                Std.afficherSucces(data.success);
+                let ligne = document.getElementById(id);
+                ligne.parentNode.removeChild(ligne);
+
+            }else {
+                msg.innerHTML = Std.genererMessage(data.error);
+            }
         },
         error: (reponse) => {
             msg.innerHTML = Std.genererMessage("L'opération a échoué, contacter la maintenance")
@@ -73,7 +87,17 @@ function epurer() {
         type: 'POST',
         dataType: 'json',
         success: function (data) {
-            
+            if(data.success) {
+                msg.innerHTML = Std.genererMessage(data.success, 'vert');
+                //supprimer les lignes sur l'interface
+                for (let tr of lesLignes.querySelectorAll('tr')){
+                    if(tr.dataset.old === '1'){
+                        tr.style.display = 'none';
+                    }
+                }
+            }else {
+                msg.innerHTML = Std.genererMessage(data.error);
+            }
 			
         },
         error: (reponse) => {

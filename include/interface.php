@@ -4,13 +4,13 @@
 // Journalisation de la requête
 $nom = '';
 if (isset($_SESSION['membre'])) {
-    $nom = $_SESSION['membre']['prenom'] . " " . $_SESSION['membre']['nom'];
+    $nom = $_SESSION['membre']['nomPrenom'];
 }
 Std::tracerDemande('requete', $nom);
 
 //  Comptabilisation de l'appel
 if (!isset($titreFonction)) $titreFonction = $_SERVER['PHP_SELF'];
-Std::setStatistique($titreFonction);
+//Vds::setStatistique($titreFonction);
 
 // récupération du nom du fichier afin de charger le fichier js associé
 $file = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
@@ -22,7 +22,6 @@ if (file_exists("js/$file.js")) $js = "<script src='js/$file.js'></script>";
 // personnalisation de l'entête de page : bouton Se connecter ou Se déconnecter
 $barre = "<a class='btn btn-sm btn-danger m-2 shadow-sm' href='/profil/connexion.php'>Se connecter</a>";
 if (isset($_SESSION['membre'])) {
-    $nom = $_SESSION['membre']['prenom'] . " " . $_SESSION['membre']['nom'];
     $barre = <<<EOD
         <i class='bi bi-person-circle m-1 masquer'></i>
         <span class="masquer">$nom</span>
@@ -35,6 +34,7 @@ EOD;
 ?>
 <!DOCTYPE HTML>
 <html lang="fr">
+<body>
 <head>
     <title>Amicale du Val de Somme</title>
     <meta charset="utf-8">
@@ -84,22 +84,6 @@ EOD;
         <a href="/index.php" title="Revenir sur la page d'accueil">
             <img class="img-fluid masquer" src="/img/logo.gif" alt="Val de Somme">
             <span class="text-white masquer ">Club de course à pied sur Amiens et ses environs</span>
-        </a>
-        <a href="https://www.facebook.com/amicalevds"
-           class="text-white">
-            <i class="bi bi-facebook fs-2"></i>&nbsp;VDS
-        </a>
-        <a href="https://www.facebook.com/Coursesdes4saisons/"
-           class="text-white">
-            <i class="bi bi-facebook fs-2 "></i>&nbsp;4 saisons
-        </a>
-        <a href="https://www.strava.com/clubs/valdesomme?utm_source=valdesomme.net"
-           class="text-white masquer">
-            <i class="bi bi-strava fs-2"></i> Strava
-        </a>
-        <a href="https://www.facebook.com/groups/amicaleduvaldesomme"
-           class="text-white">
-            <i class="bi bi-facebook fs-2"></i>&nbsp;Groupe VDS
         </a>
         <div class="text-white px-2">
             <?= $barre ?>

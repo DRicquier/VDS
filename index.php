@@ -121,6 +121,9 @@ require RACINE . '/include/head.php';
         <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/document/DOC.php?type=Club">
             Documentation
         </a>
+        <a class="btn btn-sm btn-outline-dark m-2 shadow-sm " href="/agenda/consultation.php">
+            Agenda
+        </a>
         <div class="marquee-rtl">
             <div id='detailBandeau' class=" article fst-italic"></div>
         </div>

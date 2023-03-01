@@ -12,7 +12,7 @@ abstract class  Table implements Iterator
 
     protected static string $error = '';
 
-    protected static function getError()
+    public static function getError()
     {
        return self::$error;
     }
@@ -48,7 +48,7 @@ abstract class  Table implements Iterator
     */
 
     // accesseur en lecture sur l'attribut $validationMessage
-    protected function getValidationMessage() : string
+    public function getValidationMessage() : string
     {
         return $this->validationMessage;
     }
@@ -338,7 +338,7 @@ EOD;
 
     //nom = :nom, prenom = :prenom
     //colonne ou clé
-    private function getClauseSet(): string
+    private function getClauseSet()
     {
         $set = "";
         foreach ($this->columns as $cle => $input) {
@@ -348,6 +348,7 @@ EOD;
         }
         //retirer les deux derniers caractiere
         $set = substr($set,0,-2);
+        return $set;
     }
 
     /**
@@ -473,11 +474,11 @@ EOD;
     public function ajouter()
     {
         // alimentation de la valeur des objets Input par les données transmises
- 
+        $this->setValues($_POST);
         // si des données sont calculées elles doivent avoir été initialisées dans le script appelant
 
         // contrôle des valeurs transmises
-
+        $lesErreurs = $this->checkAll();
 
         // En cas d'erreur on ne continue pas
         if (count($lesErreurs) > 0) {
@@ -485,7 +486,7 @@ EOD;
         }
 
         // ajout
-        $ok = 
+        $ok = $this->insert();
         if ($ok) {
             return json_encode(['success' => "Ajout réalisé"], JSON_UNESCAPED_UNICODE);
         } else {
@@ -503,11 +504,12 @@ EOD;
     public function modifier($all = false)
     {
         // alimentation par les données transmises
-      
+        $this->setValues($_POST);
 
         // contrôle que chaque colonne de la table a bien une valeur sauf si elle n'est pas requise
         // dans le cadre d'une modification l'id est obligatoire
-     
+        $this->columns['id']->Require = true;
+        $lesErreurs = $this->checkAll();
 
         // En cas d'erreur on ne continue pas
         if (count($lesErreurs) > 0) {
@@ -515,7 +517,7 @@ EOD;
         }
 
         // contrôler l'identifiant
-        $id = 
+        $id = $this->columns['id']->Value;
 
         $ligne = $this->get($id);
         if (!$ligne) {
@@ -524,7 +526,7 @@ EOD;
         }
 
         // modification
-        $ok = 
+        $ok = $this->update($id);
         if (!$ok) {
             $lesErreurs[] = new Erreur('msg', $this->validationMessage);
             return json_encode(['error' => $lesErreurs], JSON_UNESCAPED_UNICODE);
