@@ -61,7 +61,7 @@ abstract class  Table implements Iterator
      * @param mixed $valeur
      * @return void
      */
-    protected function setValue($cle, $valeur)
+    public function setValue($cle, $valeur)
     {
        $this-> columns[$cle]->Value = trim($valeur);
     }
@@ -71,7 +71,7 @@ abstract class  Table implements Iterator
      * @param string $cle Nom de la colonne de la table
      * @return mixed Valeur de la colonne
      */
-    protected function getValue($cle) : mixed
+    public function getValue($cle)
     {
         return $this->columns[$cle]->Value;
     }
@@ -245,10 +245,10 @@ EOD;
      * @param $id valeur de l'identifiant de l'enregistrement à mettre à jour
      * @return bool
      */
-    protected function update($id)
+    public function update($id)
     {
         $set = self::getClauseSet();
-        $sql = "update $this->tableName set $set where id = :$id";
+        $sql = "update $this->tableName set $set where id = :id;";
         return $this->prepareAndExecute($sql);
 
     }
